@@ -93,34 +93,34 @@ describe('api/countries', () => {
         });
     });
 
-      return pCreateCountryMock()
-        .then((country) => {
-          return superagent.put(`${apiUrl}/${country._id}`)
-            .send({ region: country.region });
-        })
-        .catch((err) => {
-          expect(err.status).toEqual(409);
-        });
-    });
-
-    test('404 if no country found', () => {
-      return superagent.put(`${apiUrl}/invalidId`) 
-        .then(Promise.reject)
-        .catch((response) => {
-          expect(response.status).toEqual(404);
-        });
-    });
-    test('400 for bad request', () => {
-      return pCreateCountryMock()
-        .then((country) => {
-          return superagent.put(`${apiUrl}/${country._id}`)
-            .send({ region: '' });
-        })
-        .catch((err) => {
-          expect(err.status).toEqual(400);
-        });
-    });
+    return pCreateCountryMock()
+      .then((country) => {
+        return superagent.put(`${apiUrl}/${country._id}`)
+          .send({ region: country.region });
+      })
+      .catch((err) => {
+        expect(err.status).toEqual(409);
+      });
   });
+
+  test('404 if no country found', () => {
+    return superagent.put(`${apiUrl}/invalidId`) 
+      .then(Promise.reject)
+      .catch((response) => {
+        expect(response.status).toEqual(404);
+      });
+  });
+  test('400 for bad request', () => {
+    return pCreateCountryMock()
+      .then((country) => {
+        return superagent.put(`${apiUrl}/${country._id}`)
+          .send({ region: '' });
+      })
+      .catch((err) => {
+        expect(err.status).toEqual(400);
+      });
+  });
+ 
 
   describe('GET /api/countries', () => {
     test('200', () => {
@@ -155,12 +155,13 @@ describe('api/countries', () => {
         });
     });
   });
-  
-  test('404 if no country found', () => {
-    return superagent.delete(`${apiUrl}/invalidId`) 
-      .then(Promise.reject)
-      .catch((response) => {
-        expect(response.status).toEqual(404);
-      });
+  describe('DELETTE /api/countries_id', () => {
+    test('404 if no country found', () => {
+      return superagent.delete(`${apiUrl}/invalidId`) 
+        .then(Promise.reject)
+        .catch((response) => {
+          expect(response.status).toEqual(404);
+        });
+    });
   });
 });
