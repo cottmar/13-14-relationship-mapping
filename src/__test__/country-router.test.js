@@ -5,7 +5,7 @@ import superagent from 'superagent';
 import Country from '../model/country';
 import { startServer, stopServer } from '../lib/server';
 
-const apiURL = `http://localhost:${process.env.PORT}/api/countries`;
+const apiUrl = `http://localhost:${process.env.PORT}/api/countries`;
 
 const pCreateCountryMock = () => {
   return new Country({
@@ -81,7 +81,7 @@ describe('api/countries', () => {
         .then((country) => {
           countryToUpdate = country;
           return superagent.put(`${apiUrl}/${country._id}`)
-            .send({ region: 'PACIFIC NORTHWEST' });
+            .send({ region: 'I HAVE A NEW COUNTRY REGION' });
         })
         .then((response) => {
           expect(response.status).toEqual(200);
@@ -93,10 +93,9 @@ describe('api/countries', () => {
         });
     });
 
-    test('409 for a duplicate country', () => {
       return pCreateCountryMock()
         .then((country) => {
-          return superagent.put(`${apiURL}/${country._id}`)
+          return superagent.put(`${apiUrl}/${country._id}`)
             .send({ region: country.region });
         })
         .catch((err) => {
@@ -105,7 +104,7 @@ describe('api/countries', () => {
     });
 
     test('404 if no country found', () => {
-      return superagent.put(`${apiURL}/invalidId`) 
+      return superagent.put(`${apiUrl}/invalidId`) 
         .then(Promise.reject)
         .catch((response) => {
           expect(response.status).toEqual(404);
@@ -114,7 +113,7 @@ describe('api/countries', () => {
     test('400 for bad request', () => {
       return pCreateCountryMock()
         .then((country) => {
-          return superagent.put(`${apiURL}/${country._id}`)
+          return superagent.put(`${apiUrl}/${country._id}`)
             .send({ region: '' });
         })
         .catch((err) => {
@@ -137,7 +136,7 @@ describe('api/countries', () => {
         });
     });
     test('should respond with 404 if there is no country to be found', () => {
-      return superagent.get(`${apiURL}/THisIsAnInvalidId`)
+      return superagent.get(`${apiUrl}/THisIsAnInvalidId`)
         .then(Promise.reject) 
         .catch((response) => {
           expect(response.status).toEqual(404);
@@ -158,7 +157,7 @@ describe('api/countries', () => {
   });
   
   test('404 if no country found', () => {
-    return superagent.delete(`${apiURL}/invalidId`) 
+    return superagent.delete(`${apiUrl}/invalidId`) 
       .then(Promise.reject)
       .catch((response) => {
         expect(response.status).toEqual(404);

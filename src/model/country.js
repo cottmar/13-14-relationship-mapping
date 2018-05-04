@@ -19,10 +19,10 @@ const countrySchema = mongoose.Schema({
     type: Date,
     default: () => new Date(),
   },
-  // this is your "many" model to think about tomorrow
+ 
   cards: [
     {
-      type: mongoose.Schema.Types.ObjectId, ref: 'place', // your "many" model name goes here
+      type: mongoose.Schema.Types.ObjectId, ref: 'place',
     },
   ],
 });
