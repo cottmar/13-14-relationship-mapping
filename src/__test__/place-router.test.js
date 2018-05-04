@@ -15,8 +15,7 @@ describe('/api/places', () => {
 
   describe('POST /api/places', () => {
     test('200 status code in creation', () => {
-      // Vinicio  - to create a 'real' place I need a mock country
-      return pCreateCountryMock() // Vinicio - Mock
+      return pCreateCountryMock() 
         .then((countryMock) => {
           const placeToPost = {
             region: faker.lorem.words(10),
@@ -24,17 +23,16 @@ describe('/api/places', () => {
             country: countryMock._id,
           };
 
-          return superagent.post(apiUrl) // Vinicio - making a real request
+          return superagent.post(apiUrl)
             .send(placeToPost)
             .then((response) => {
               expect(response.status).toEqual(200);
             });
         });
     });
-  }); // describe
+  });
   describe('PUT /api/places', () => {
     test('200 status code in creation', () => {
-      // Vinicio  - to create a 'real' place I need a mock country
       let placeToUpdate = null;
       return pCreatePlaceMock()
         .then((mock) => {
